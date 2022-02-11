@@ -1,0 +1,47 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "MealPlanDb",
+   "ContextNamespace": "",
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": "",
+   "OutputContextPath": "Data",
+   "OutputPath": "Model",
+   "ProjectRootNamespace": "MealPlan.Db",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[IngredientReference]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Recipe]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RecipeIngredient]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "MEAL_PLAN\\MEAL_PLAN.sqlproj",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
