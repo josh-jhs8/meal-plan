@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MealPlan": {
+      "commandName": "Project",
+      "commandLineArgs": "load -r \"C:\\Users\\joshj\\Desktop\\recipes.json\""
+    }
+  }
+}

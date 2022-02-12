@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[RecipeStep]
+(
+	[Id] INT IDENTITY(1, 1) NOT NULL,
+	[RecipeId] INT NOT NULL,
+	[StepNumber] INT NOT NULL,
+	[Text] NVARCHAR(MAX) NOT NULL,
+	CONSTRAINT [RecipeStep_PRIMARY_KEY_Id] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [RecipeStep_UNIQUE_RecipeId_StepNumber] UNIQUE NONCLUSTERED ([RecipeId] ASC, [StepNumber] ASC),
+	CONSTRAINT [RecipeStep_FOREIGN_KEY_RecipeId] FOREIGN KEY ([RecipeId]) REFERENCES [Recipe]([Id])
+)

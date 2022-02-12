@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MealPlan.Db\MealPlan.Db.csproj" />
+    <ProjectReference Include="..\MealPlan.Repo.Dto\MealPlan.Repo.Dto.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -22,24 +22,34 @@ namespace MealPlan.Db.Data
         public virtual DbSet<IngredientReference> IngredientReferences { get; set; }
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+        public virtual DbSet<RecipeStep> RecipeSteps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=MEAL_PLAN;Integrated Security=true");
 
-            modelBuilder.Entity<IngredientReference>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<Recipe>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-
             modelBuilder.Entity<RecipeIngredient>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasOne(d => d.IngredientReference)
+                    .WithMany(p => p.RecipeIngredients)
+                    .HasForeignKey(d => d.IngredientReferenceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("RecipeIngredient_FOREIGN_KEY_IngredientReferenceId");
+
+                entity.HasOne(d => d.Recipe)
+                    .WithMany(p => p.RecipeIngredients)
+                    .HasForeignKey(d => d.RecipeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("RecipeIngredient_FOREIGN_KEY_RecipeId");
+            });
+
+            modelBuilder.Entity<RecipeStep>(entity =>
+            {
+                entity.HasOne(d => d.Recipe)
+                    .WithMany(p => p.RecipeSteps)
+                    .HasForeignKey(d => d.RecipeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("RecipeStep_FOREIGN_KEY_RecipeId");
             });
 
             OnModelCreatingPartial(modelBuilder);

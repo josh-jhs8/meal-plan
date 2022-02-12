@@ -18,5 +18,12 @@ namespace MealPlan.Db.Model
         public int IngredientReferenceId { get; set; }
         [Column(TypeName = "decimal(10, 4)")]
         public decimal Amount { get; set; }
+
+        [ForeignKey(nameof(IngredientReferenceId))]
+        [InverseProperty("RecipeIngredients")]
+        public virtual IngredientReference IngredientReference { get; set; }
+        [ForeignKey(nameof(RecipeId))]
+        [InverseProperty("RecipeIngredients")]
+        public virtual Recipe Recipe { get; set; }
     }
 }

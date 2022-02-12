@@ -2,6 +2,7 @@
 using MealPlan.Db.Data;
 using MealPlan.Logic;
 using MealPlan.Repo;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace MealPlan.DependencyInjection
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
 
-            containerBuilder.RegisterType<MealPlanDb>();
+            containerBuilder.Register(c => new MealPlanDb());
 
             return containerBuilder;
         }

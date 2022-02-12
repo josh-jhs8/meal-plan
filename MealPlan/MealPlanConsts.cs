@@ -7,6 +7,7 @@
         public const string ShortRecipeFlag = "-r";
         public const string LongRecipeFlag = "-recipe";
 
+        public const string ExportAction = "export";
         public const string LoadAction = "load";
         public const string AddAction = "add";
         public const string ListAction = "list";

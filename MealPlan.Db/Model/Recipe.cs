@@ -12,11 +12,22 @@ namespace MealPlan.Db.Model
     [Index(nameof(Name), Name = "Recipe_UNIQUE_Name", IsUnique = true)]
     public partial class Recipe
     {
+        public Recipe()
+        {
+            RecipeIngredients = new HashSet<RecipeIngredient>();
+            RecipeSteps = new HashSet<RecipeStep>();
+        }
+
         [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(1000)]
         [Unicode(false)]
         public string Name { get; set; }
+
+        [InverseProperty(nameof(RecipeIngredient.Recipe))]
+        public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+        [InverseProperty(nameof(RecipeStep.Recipe))]
+        public virtual ICollection<RecipeStep> RecipeSteps { get; set; }
     }
 }

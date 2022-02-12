@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MealPlan.Logic.DomainObject\MealPlan.Logic.DomainObject.csproj" />
+    <ProjectReference Include="..\MealPlan.Repo.Dto\MealPlan.Repo.Dto.csproj" />
+  </ItemGroup>
+
 </Project>

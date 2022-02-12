@@ -61,6 +61,7 @@
     <Build Include="IngredientReference.sql" />
     <Build Include="Recipe.sql" />
     <Build Include="RecipeIngredient.sql" />
+    <Build Include="RecipeStep.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MEAL_PLAN.publish.xml" />

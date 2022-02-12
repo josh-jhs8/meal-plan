@@ -3,9 +3,6 @@ using Autofac;
 using MealPlan;
 using MealPlan.DependencyInjection;
 
-Console.WriteLine("Hello, World!");
-Console.WriteLine(String.Join(",", args) + args.Length.ToString());
-
 if (args.Count(a => a.StartsWith("-")) != 1)
 {
     Console.WriteLine("A single type flag must be supplied.");

@@ -24,6 +24,10 @@
       {
          "Name": "[dbo].[RecipeIngredient]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RecipeStep]",
+         "ObjectType": 0
       }
    ],
    "UiHint": "MEAL_PLAN\\MEAL_PLAN.sqlproj",

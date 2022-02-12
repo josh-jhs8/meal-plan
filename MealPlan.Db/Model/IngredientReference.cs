@@ -12,6 +12,11 @@ namespace MealPlan.Db.Model
     [Index(nameof(Name), Name = "IngredientReference_UNIQUE_Name", IsUnique = true)]
     public partial class IngredientReference
     {
+        public IngredientReference()
+        {
+            RecipeIngredients = new HashSet<RecipeIngredient>();
+        }
+
         [Key]
         public int Id { get; set; }
         [Required]
@@ -19,7 +24,7 @@ namespace MealPlan.Db.Model
         [Unicode(false)]
         public string Name { get; set; }
         [Column(TypeName = "decimal(10, 2)")]
-        public decimal PerUnit { get; set; }
+        public decimal PerAmount { get; set; }
         [Required]
         [StringLength(255)]
         [Unicode(false)]
@@ -30,5 +35,9 @@ namespace MealPlan.Db.Model
         public decimal Fat { get; set; }
         [Column(TypeName = "decimal(10, 2)")]
         public decimal Carbs { get; set; }
+        public int Calories { get; set; }
+
+        [InverseProperty(nameof(RecipeIngredient.IngredientReference))]
+        public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
     }
 }
