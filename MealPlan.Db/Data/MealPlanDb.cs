@@ -19,7 +19,11 @@ namespace MealPlan.Db.Data
         {
         }
 
+        public virtual DbSet<DailyTarget> DailyTargets { get; set; }
         public virtual DbSet<IngredientReference> IngredientReferences { get; set; }
+        public virtual DbSet<Meal> Meals { get; set; }
+        public virtual DbSet<MealChange> MealChanges { get; set; }
+        public virtual DbSet<MealType> MealTypes { get; set; }
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public virtual DbSet<RecipeStep> RecipeSteps { get; set; }
@@ -27,6 +31,46 @@ namespace MealPlan.Db.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=MEAL_PLAN;Integrated Security=true");
+
+            modelBuilder.Entity<Meal>(entity =>
+            {
+                entity.HasOne(d => d.MealType)
+                    .WithMany(p => p.Meals)
+                    .HasForeignKey(d => d.MealTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Meal_FOREIGN_KEY_MealTypeId");
+
+                entity.HasOne(d => d.Recipe)
+                    .WithMany(p => p.Meals)
+                    .HasForeignKey(d => d.RecipeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Meal_FOREIGN_KEY_RecipeId");
+            });
+
+            modelBuilder.Entity<MealChange>(entity =>
+            {
+                entity.HasOne(d => d.IngredientReference)
+                    .WithMany(p => p.MealChanges)
+                    .HasForeignKey(d => d.IngredientReferenceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("MealChange_FOREIGN_KEY_IngredientReferenceId");
+
+                entity.HasOne(d => d.Meal)
+                    .WithMany(p => p.MealChanges)
+                    .HasForeignKey(d => d.MealId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("MealChange_FOREIGN_KEY_MealId");
+
+                entity.HasOne(d => d.ParentMealChange)
+                    .WithMany(p => p.InverseParentMealChange)
+                    .HasForeignKey(d => d.ParentMealChangeId)
+                    .HasConstraintName("MealChange_FOREIGN_KEY_ParentMealChangeId");
+            });
+
+            modelBuilder.Entity<MealType>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
 
             modelBuilder.Entity<RecipeIngredient>(entity =>
             {

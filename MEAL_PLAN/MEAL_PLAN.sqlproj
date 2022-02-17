@@ -62,8 +62,15 @@
     <Build Include="Recipe.sql" />
     <Build Include="RecipeIngredient.sql" />
     <Build Include="RecipeStep.sql" />
+    <Build Include="Meal.sql" />
+    <Build Include="MealType.sql" />
+    <Build Include="MealChange.sql" />
+    <Build Include="DailyTarget.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MEAL_PLAN.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="postDeployment.sql" />
   </ItemGroup>
 </Project>

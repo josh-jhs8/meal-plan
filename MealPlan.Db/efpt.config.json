@@ -14,7 +14,23 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[DailyTarget]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[IngredientReference]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Meal]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MealChange]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MealType]",
          "ObjectType": 0
       },
       {

@@ -14,6 +14,7 @@ namespace MealPlan.Db.Model
     {
         public IngredientReference()
         {
+            MealChanges = new HashSet<MealChange>();
             RecipeIngredients = new HashSet<RecipeIngredient>();
         }
 
@@ -37,6 +38,8 @@ namespace MealPlan.Db.Model
         public decimal Carbs { get; set; }
         public int Calories { get; set; }
 
+        [InverseProperty(nameof(MealChange.IngredientReference))]
+        public virtual ICollection<MealChange> MealChanges { get; set; }
         [InverseProperty(nameof(RecipeIngredient.IngredientReference))]
         public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
     }

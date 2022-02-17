@@ -8,15 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MealPlan.Db.Model
 {
-    [Table("Recipe")]
-    [Index(nameof(Name), Name = "Recipe_UNIQUE_Name", IsUnique = true)]
-    public partial class Recipe
+    [Table("MealType")]
+    [Index(nameof(Name), Name = "MealType_UNIQUE_Name", IsUnique = true)]
+    public partial class MealType
     {
-        public Recipe()
+        public MealType()
         {
             Meals = new HashSet<Meal>();
-            RecipeIngredients = new HashSet<RecipeIngredient>();
-            RecipeSteps = new HashSet<RecipeStep>();
         }
 
         [Key]
@@ -26,11 +24,7 @@ namespace MealPlan.Db.Model
         [Unicode(false)]
         public string Name { get; set; }
 
-        [InverseProperty(nameof(Meal.Recipe))]
+        [InverseProperty(nameof(Meal.MealType))]
         public virtual ICollection<Meal> Meals { get; set; }
-        [InverseProperty(nameof(RecipeIngredient.Recipe))]
-        public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
-        [InverseProperty(nameof(RecipeStep.Recipe))]
-        public virtual ICollection<RecipeStep> RecipeSteps { get; set; }
     }
 }
