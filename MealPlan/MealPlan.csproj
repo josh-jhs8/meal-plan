@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MealPlan.DependencyInjection\MealPlan.DependencyInjection.csproj" />
-    <ProjectReference Include="..\MealPlan.Logic.DomainObject\MealPlan.Logic.DomainObject.csproj" />
-    <ProjectReference Include="..\MealPlan.Repo.Dto\MealPlan.Repo.Dto.csproj" />
+    <ProjectReference Include="..\MealPlan.DependencyInjection\DependencyInjection.csproj" />
+    <ProjectReference Include="..\MealPlan.Logic.DomainObject\Logic.DomainObject.csproj" />
+    <ProjectReference Include="..\MealPlan.Repo.Dto\Repo.Dto.csproj" />
   </ItemGroup>
 
 </Project>

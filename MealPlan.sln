@@ -7,17 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MealPlan", "MealPlan\MealPl
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MEAL_PLAN", "MEAL_PLAN\MEAL_PLAN.sqlproj", "{6B50E6FB-D8CB-4541-9BA1-26E188921FA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlan.Db", "MealPlan.Db\MealPlan.Db.csproj", "{71ABC458-DEC0-40BA-847F-7C446EEECB0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Db", "MealPlan.Db\Db.csproj", "{71ABC458-DEC0-40BA-847F-7C446EEECB0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlan.Repo", "MealPlan.Repo\MealPlan.Repo.csproj", "{28838F10-1CF4-47FF-930B-8A72D4640AEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repo", "MealPlan.Repo\Repo.csproj", "{28838F10-1CF4-47FF-930B-8A72D4640AEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlan.Repo.Dto", "MealPlan.Repo.Dto\MealPlan.Repo.Dto.csproj", "{A47E1AFD-5F4F-4EB0-877F-1D491DD4C685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repo.Dto", "MealPlan.Repo.Dto\Repo.Dto.csproj", "{A47E1AFD-5F4F-4EB0-877F-1D491DD4C685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlan.Logic", "MealPlan.Logic\MealPlan.Logic.csproj", "{E010F9DC-C9A0-4628-A30F-04A7FE3BFAF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "MealPlan.Logic\Logic.csproj", "{E010F9DC-C9A0-4628-A30F-04A7FE3BFAF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlan.Logic.DomainObject", "MealPlan.Logic.DomainObject\MealPlan.Logic.DomainObject.csproj", "{AE19B839-0EC6-4B7A-A26F-09478C46E113}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic.DomainObject", "MealPlan.Logic.DomainObject\Logic.DomainObject.csproj", "{AE19B839-0EC6-4B7A-A26F-09478C46E113}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlan.DependencyInjection", "MealPlan.DependencyInjection\MealPlan.DependencyInjection.csproj", "{0D4A66C4-111E-4EF7-B236-09D1DB87899F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection", "MealPlan.DependencyInjection\DependencyInjection.csproj", "{0D4A66C4-111E-4EF7-B236-09D1DB87899F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

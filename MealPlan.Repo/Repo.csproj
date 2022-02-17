@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MealPlan.Db\MealPlan.Db.csproj" />
-    <ProjectReference Include="..\MealPlan.Repo.Dto\MealPlan.Repo.Dto.csproj" />
+    <ProjectReference Include="..\MealPlan.Db\Db.csproj" />
+    <ProjectReference Include="..\MealPlan.Repo.Dto\Repo.Dto.csproj" />
   </ItemGroup>
 
 </Project>
