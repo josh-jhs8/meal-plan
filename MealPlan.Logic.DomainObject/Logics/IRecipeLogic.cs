@@ -12,5 +12,7 @@ namespace MealPlan.Logic.DomainObject.Logics
         Task<ResultInfo> LoadRecipesFromFile(string filePath);
 
         Task<ResultInfo> ExportRecipesToFile(string filePath);
+
+        Task<MacroInfo> CalculateMacrosForRecipe(string recipeName);
     }
 }

@@ -20,8 +20,37 @@ namespace MealPlan.Logic
             var existingRecipe = await _repo.GetRecipe(recipeInfo.Name);
             if (existingRecipe != null) return new ResultInfo { Message = $"{recipeInfo.Name} already exists in Recipes", Success = false };
 
+            var ingredientList = recipeInfo.Ingredients.Select(i => i.Name).ToArray();
+            var ingredients = await _repo.GetIngredients(ingredientList);
+            var missingIngredients = ingredientList.Where(mi => !ingredients.Any(i => mi == i.Name)).ToArray();
+            if (missingIngredients.Length > 0)
+            {
+                return new ResultInfo { Message = $"The following ingredients have no reference values: {string.Join(", ", missingIngredients)}", Success = false };
+            }
+
             await _repo.SaveRecipes(new RecipeInfo[] { recipeInfo });
             return new ResultInfo { Message = $"Added {recipeInfo.Name}", Success = true };
+        }
+
+        public async Task<MacroInfo> CalculateMacrosForRecipe(string recipeName)
+        {
+            var recipe = await _repo.GetRecipe(recipeName);
+            if (recipe == null) throw new Exception("Could not find recipe");
+
+            var ingredientList = recipe.Ingredients.Select(x => x.Name).ToArray();
+            var ingredients = await _repo.GetIngredients(ingredientList);
+
+            var macroInfo = new MacroInfo();
+            foreach (var recipeIngredient in recipe.Ingredients)
+            {
+                var ingredient = ingredients.First(i => i.Name == recipeIngredient.Name);
+                macroInfo.Carbs += recipeIngredient.Amount * (ingredient.Carbs / ingredient.PerAmount);
+                macroInfo.Fats += recipeIngredient.Amount * ( ingredient.Fats / ingredient.PerAmount);
+                macroInfo.Protein += recipeIngredient.Amount * (ingredient.Protein / ingredient.PerAmount);
+                macroInfo.Calories += recipeIngredient.Amount * (ingredient.Calories / ingredient.PerAmount);
+            }
+
+            return macroInfo;
         }
 
         public async Task<ResultInfo> DeleteRecipe(string name)
@@ -56,6 +85,19 @@ namespace MealPlan.Logic
 
             var recipes = JsonConvert.DeserializeObject<List<RecipeInfo>>(fileContents);
             if (recipes == null) return new ResultInfo { Message = $"{filePath} cannot be deserialized", Success = false };
+
+            var ingredients = await _repo.GetIngredients();
+            var missingIngredients = new List<string>();
+            foreach (var recipe in recipes)
+            {
+                var ingredientList = recipe.Ingredients.Select(i => i.Name).ToArray();
+                missingIngredients.AddRange(ingredientList.Where(mi => !ingredients.Any(i => mi == i.Name)));
+                
+            }
+            if (missingIngredients.Count > 0)
+            {
+                return new ResultInfo { Message = $"The following ingredients have no reference values: {string.Join(", ", missingIngredients)}", Success = false };
+            }
 
             await _repo.SaveRecipes(recipes.ToArray());
 

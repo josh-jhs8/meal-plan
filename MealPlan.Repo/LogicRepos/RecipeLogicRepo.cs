@@ -117,5 +117,30 @@ namespace MealPlan.Repo.LogicRepos
                 }
             }
         }
+
+        public async Task<IngredientInfo[]> GetIngredients()
+        {
+            var ingredients = await Db.IngredientReferences
+                .ToArrayAsync();
+
+            var mapped = ingredients
+                .Select(IngredientMapping.MapToIngredientInfo)
+                .ToArray();
+
+            return mapped;
+        }
+
+        public async Task<IngredientInfo[]> GetIngredients(string[] names)
+        {
+            var ingredients = await Db.IngredientReferences
+                .Where(ir => names.Contains(ir.Name))
+                .ToArrayAsync();
+
+            var mapped = ingredients
+                .Select(IngredientMapping.MapToIngredientInfo)
+                .ToArray();
+
+            return mapped;
+        }
     }
 }

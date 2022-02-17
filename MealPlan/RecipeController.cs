@@ -135,7 +135,8 @@ namespace MealPlan
             var recipes = _repo.GetRecipes().Result;
             foreach (var recipe in recipes)
             {
-                Console.WriteLine($"{recipe.Name}");
+                var macros = _logic.CalculateMacrosForRecipe(recipe.Name).Result;
+                Console.WriteLine($"{recipe.Name} ({macros.Calories} kcal - C: {macros.Carbs}g, F: {macros.Fats}g, P: {macros.Protein}g)");
             }
         }
 
@@ -156,9 +157,19 @@ namespace MealPlan
                 return;
             }
 
+            var macros = _logic.CalculateMacrosForRecipe(recipe.Name).Result;
+
             Console.WriteLine($"### {recipe.Name} ###");
+
+            Console.WriteLine("+ Macros");
+            Console.WriteLine($"  - Calories: {macros.Calories} kcal");
+            Console.WriteLine($"  - Protein: {macros.Protein} g");
+            Console.WriteLine($"  - Carbs: {macros.Carbs} g");
+            Console.WriteLine($"  - Fats: {macros.Fats} g");
+
             Console.WriteLine("+ Ingredients:");
             foreach (var ingredient in recipe.Ingredients) Console.WriteLine($"  - {ingredient.Name}: {ingredient.Amount} {ingredient.UnitName}");
+
             Console.WriteLine("+ Instructions:");
             for (var i = 0; i < recipe.Steps.Length; i++) Console.WriteLine($"  {i + 1}. {recipe.Steps[i]}");
         }
