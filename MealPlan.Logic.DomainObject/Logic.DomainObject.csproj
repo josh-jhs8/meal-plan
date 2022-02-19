@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AssemblyName>MealPlan.Logic.DomainObject</AssemblyName>
+    <RootNamespace>MealPlan.Logic.DomainObject</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

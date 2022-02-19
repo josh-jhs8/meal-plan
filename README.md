@@ -1,5 +1,6 @@
 # meal-plan
 Console app for Meal Planning
+Anywhere a date is used i'll stick to dd.MM.yyyy format
 
 ## Ingredients
 

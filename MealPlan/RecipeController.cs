@@ -4,7 +4,7 @@ using MealPlan.Repo.Dto.Repos;
 
 namespace MealPlan
 {
-    internal class RecipeController
+    internal class RecipeController : IConsoleController
     {
         private readonly IRecipeControllerRepo _repo;
         private readonly IRecipeLogic _logic;
@@ -15,7 +15,7 @@ namespace MealPlan
             _logic = logic;
         }
 
-        internal void HandleAction(string[] args)
+        public void HandleAction(string[] args)
         {
             if (args.Length < 2)
             {
@@ -37,7 +37,7 @@ namespace MealPlan
 
         private void Load(string[] args)
         {
-            var filePath = GetFirstParameter(args);
+            var filePath = ConsoleUtil.GetFirstParameter(args);
             if (filePath == null)
             {
                 Console.WriteLine("A file path must be supplied");
@@ -50,7 +50,7 @@ namespace MealPlan
 
         private void Export(string[] args)
         {
-            var filePath = GetFirstParameter(args);
+            var filePath = ConsoleUtil.GetFirstParameter(args);
             if (filePath == null)
             {
                 Console.WriteLine("A file path must be supplied");
@@ -119,7 +119,7 @@ namespace MealPlan
 
         private void Delete(string[] args)
         {
-            var name = GetFirstParameter(args);
+            var name = ConsoleUtil.GetFirstParameter(args);
             if (name == null)
             {
                 Console.WriteLine("A Recipe name must be supplied");
@@ -142,7 +142,7 @@ namespace MealPlan
 
         private void View(string[] args)
         {
-            var name = GetFirstParameter(args);
+            var name = ConsoleUtil.GetFirstParameter(args);
             if (name == null)
             {
                 Console.WriteLine("A Recipe name must be supplied");
@@ -172,21 +172,6 @@ namespace MealPlan
 
             Console.WriteLine("+ Instructions:");
             for (var i = 0; i < recipe.Steps.Length; i++) Console.WriteLine($"  {i + 1}. {recipe.Steps[i]}");
-        }
-
-        private string? GetFirstParameter(string[] args)
-        {
-            string firstParam = null;
-            for (var i = 1; i < args.Length; i++)
-            {
-                if (args[i] == MealPlanConsts.ShortRecipeFlag || args[i] == MealPlanConsts.LongRecipeFlag) continue;
-                else
-                {
-                    firstParam = args[i];
-                    break;
-                }
-            }
-            return firstParam;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace MealPlan.Logic
                 macroInfo.Carbs += recipeIngredient.Amount * (ingredient.Carbs / ingredient.PerAmount);
                 macroInfo.Fats += recipeIngredient.Amount * ( ingredient.Fats / ingredient.PerAmount);
                 macroInfo.Protein += recipeIngredient.Amount * (ingredient.Protein / ingredient.PerAmount);
-                macroInfo.Calories += recipeIngredient.Amount * (ingredient.Calories / ingredient.PerAmount);
+                macroInfo.Calories += (int)(recipeIngredient.Amount * (ingredient.Calories / ingredient.PerAmount));
             }
 
             return macroInfo;
