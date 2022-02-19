@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 
 namespace MealPlan.Logic
 {
-    public class RecipeLogic : IRecipeLogic
+    public class RecipeLogic : MacroCalculatorLogic, IRecipeLogic
     {
         private readonly IRecipeLogicRepo _repo;
 
-        public RecipeLogic(IRecipeLogicRepo repo)
+        public RecipeLogic(IRecipeLogicRepo repo) : base(repo)
         {
             _repo = repo;
         }
@@ -30,27 +30,6 @@ namespace MealPlan.Logic
 
             await _repo.SaveRecipes(new RecipeInfo[] { recipeInfo });
             return new ResultInfo { Message = $"Added {recipeInfo.Name}", Success = true };
-        }
-
-        public async Task<MacroInfo> CalculateMacrosForRecipe(string recipeName)
-        {
-            var recipe = await _repo.GetRecipe(recipeName);
-            if (recipe == null) throw new Exception("Could not find recipe");
-
-            var ingredientList = recipe.Ingredients.Select(x => x.Name).ToArray();
-            var ingredients = await _repo.GetIngredients(ingredientList);
-
-            var macroInfo = new MacroInfo();
-            foreach (var recipeIngredient in recipe.Ingredients)
-            {
-                var ingredient = ingredients.First(i => i.Name == recipeIngredient.Name);
-                macroInfo.Carbs += recipeIngredient.Amount * (ingredient.Carbs / ingredient.PerAmount);
-                macroInfo.Fats += recipeIngredient.Amount * ( ingredient.Fats / ingredient.PerAmount);
-                macroInfo.Protein += recipeIngredient.Amount * (ingredient.Protein / ingredient.PerAmount);
-                macroInfo.Calories += (int)(recipeIngredient.Amount * (ingredient.Calories / ingredient.PerAmount));
-            }
-
-            return macroInfo;
         }
 
         public async Task<ResultInfo> DeleteRecipe(string name)
@@ -102,6 +81,15 @@ namespace MealPlan.Logic
             await _repo.SaveRecipes(recipes.ToArray());
 
             return new ResultInfo { Message = $"Loaded {filePath}", Success = true };
+        }
+
+        public async Task<MacroInfo> CalculateMacrosForRecipe(string recipeName)
+        {
+            var recipe = await _repo.GetRecipe(recipeName);
+            if (recipe == null) throw new Exception("Could not find recipe");
+
+            var macros = await CalculateMacrosForRecipeIngredients(recipe.Ingredients);
+            return macros;
         }
     }
 }

@@ -2,8 +2,10 @@
 
 namespace MealPlan.Repo.Dto.Repos
 {
-    public interface IMealControllerRepo
+    public interface IMealLogicRepo : IMacroCalculatorLogicRepo
     {
+        public Task SaveMeals(RawMealInfo[] meals);
+
         public Task<RawMealInfo[]> GetMeals(DateTime? startDate = null, DateTime? endDate = null);
     }
 }

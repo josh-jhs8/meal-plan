@@ -11,5 +11,7 @@ namespace MealPlan.Logic.DomainObject.Logics
     public interface IMealLogic
     {
         public Task<ResultInfo> AddMeal(RawMealInfo meal);
+
+        public Task<FullMealInfo[]> GetMeals(DateTime? startDate = null, DateTime? endDate = null);
     }
 }
