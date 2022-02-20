@@ -12,6 +12,14 @@ namespace MealPlan.Logic.DomainObject.Logics
     {
         public Task<ResultInfo> AddMeal(RawMealInfo meal);
 
-        public Task<FullMealInfo[]> GetMeals(DateTime? startDate = null, DateTime? endDate = null);
+        public Task<FullMealInfo[]> GetMeals(DateTime? startDate, DateTime? endDate);
+
+        public Task<ResultInfo> DeleteMeal(DateTime date, string recipe, string? mealType);
+
+        public Task<ResultInfo> ExportRawMealsToFile(string filePath, DateTime? startDate, DateTime? endDate);
+
+        public Task<ResultInfo> ExportFullMealsToFile(string filePath, DateTime? startDate, DateTime? endDate);
+
+        public Task<ResultInfo> LoadRawMealsFromFile(string filePath);
     }
 }

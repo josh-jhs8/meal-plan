@@ -3,11 +3,7 @@ using MealPlan.Logic.DomainObject.Models;
 using MealPlan.Repo.Dto.Enums;
 using MealPlan.Repo.Dto.Models;
 using MealPlan.Repo.Dto.Repos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MealPlan.Logic
 {
@@ -44,7 +40,72 @@ namespace MealPlan.Logic
             return new ResultInfo { Message = $"{meal.Recipe} - {meal.Date.ToShortDateString()} Saved", Success = true };
         }
 
-        public async Task<FullMealInfo[]> GetMeals(DateTime? startDate = null, DateTime? endDate = null)
+        public async Task<ResultInfo> DeleteMeal(DateTime date, string recipe, string? mealType)
+        {
+            var meals = await _repo.GetMeals(date, date);
+            var mealToDelete = meals.FirstOrDefault(m => m.Recipe == recipe && (mealType == null || m.Type == mealType));
+
+            if (mealToDelete == null) return new ResultInfo { Message = $"{recipe} is not planned for {date.ToShortDateString()}", Success = false };
+
+            await _repo.DeleteMeal(mealToDelete);
+            return new ResultInfo { Message = $"Deleted {mealToDelete.Recipe} from {mealToDelete.Date.ToShortDateString()}", Success = true };
+        }
+
+        public async Task<ResultInfo> ExportRawMealsToFile(string filePath, DateTime? startDate, DateTime? endDate)
+        {
+            var fileInfo = new FileInfo(filePath);
+            if (fileInfo.Directory == null || !fileInfo.Directory.Exists) return new ResultInfo { Message = $"{filePath} directory doesn't exist", Success = false };
+            if (!filePath.ToLower().EndsWith(".json")) return new ResultInfo { Message = $"{filePath} is not a json", Success = false };
+
+            var meals = await _repo.GetMeals(startDate, endDate);
+            var json = JsonConvert.SerializeObject(meals, Formatting.Indented);
+            await File.WriteAllTextAsync(filePath, json);
+
+            return new ResultInfo { Message = $"Created {filePath}", Success = true };
+        }
+
+        public async Task<ResultInfo> ExportFullMealsToFile(string filePath, DateTime? startDate, DateTime? endDate)
+        {
+            var fileInfo = new FileInfo(filePath);
+            if (fileInfo.Directory == null || !fileInfo.Directory.Exists) return new ResultInfo { Message = $"{filePath} directory doesn't exist", Success = false };
+            if (!filePath.ToLower().EndsWith(".json")) return new ResultInfo { Message = $"{filePath} is not a json", Success = false };
+
+            var meals = await GetMeals(startDate, endDate);
+            var json = JsonConvert.SerializeObject(meals, Formatting.Indented);
+            await File.WriteAllTextAsync(filePath, json);
+
+            return new ResultInfo { Message = $"Created {filePath}", Success = true };
+        }
+
+        public async Task<ResultInfo> LoadRawMealsFromFile(string filePath)
+        {
+            if (!File.Exists(filePath)) return new ResultInfo { Message = $"{filePath} does not exist", Success = false };
+            if (!filePath.ToLower().EndsWith(".json")) return new ResultInfo { Message = $"{filePath} is not a json", Success = false };
+
+            var fileContents = await File.ReadAllTextAsync(filePath);
+            if (string.IsNullOrEmpty(fileContents)) return new ResultInfo { Message = $"{filePath} is empty", Success = false };
+
+            var meals = JsonConvert.DeserializeObject<List<RawMealInfo>>(fileContents);
+            if (meals == null) return new ResultInfo { Message = $"{filePath} cannot be deserialized", Success = false };
+
+            var recipeList = meals.Select(m => m.Recipe).ToList();
+            var ingredientList = meals.SelectMany(m => m.Changes).Select(c => c.Ingredient.Name).ToList();
+
+            var recipes = await _repo.GetRecipes();
+            var ingredients = await _repo.GetIngredients(ingredientList.ToArray());
+
+            recipeList.RemoveAll(r => recipes.Contains(r));
+            ingredientList.RemoveAll(i => ingredients.Any(ir => ir.Name == i));
+            var message = string.Empty;
+            if (recipeList.Count > 0) message = $"The following recipes are missing from reference: {string.Join(", ", recipeList)}.";
+            if (ingredientList.Count > 0) message += $" The following ingredients are missing from reference: {string.Join(", ", ingredientList)}.";
+            if (!string.IsNullOrEmpty(message)) return new ResultInfo { Message = message.Trim(), Success = false };
+
+            await _repo.SaveMeals(meals.ToArray());
+            return new ResultInfo { Message = $"Loaded {filePath}", Success = true };
+        }
+
+        public async Task<FullMealInfo[]> GetMeals(DateTime? startDate, DateTime? endDate)
         {
             var output = new List<FullMealInfo>();
             var meals = await _repo.GetMeals(startDate, endDate);

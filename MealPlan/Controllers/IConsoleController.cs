@@ -1,4 +1,4 @@
-﻿namespace MealPlan
+﻿namespace MealPlan.Controllers
 {
     public interface IConsoleController
     {

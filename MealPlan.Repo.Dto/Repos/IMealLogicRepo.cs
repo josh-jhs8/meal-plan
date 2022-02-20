@@ -7,5 +7,9 @@ namespace MealPlan.Repo.Dto.Repos
         public Task SaveMeals(RawMealInfo[] meals);
 
         public Task<RawMealInfo[]> GetMeals(DateTime? startDate = null, DateTime? endDate = null);
+
+        public Task DeleteMeal(RawMealInfo meal);
+
+        public Task<string[]> GetRecipes();
     }
 }

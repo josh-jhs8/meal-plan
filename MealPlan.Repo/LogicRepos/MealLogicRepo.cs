@@ -141,5 +141,22 @@ namespace MealPlan.Repo.LogicRepos
             if (addOrRemove == "REMOVE") return AddOrRemove.Remove;
             throw new Exception("Invalid Add or Remove data found");
         }
+
+        public async Task DeleteMeal(RawMealInfo meal)
+        {
+            var entity = await _db.Meals
+                .Include(m => m.MealChanges)
+                .FirstAsync(m => m.PlannedDate == meal.Date && m.Recipe.Name == meal.Recipe && m.MealType.Name == meal.Type);
+
+            _db.MealChanges.RemoveRange(entity.MealChanges);
+            _db.Meals.Remove(entity);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<string[]> GetRecipes()
+        {
+            var recipes = await _db.Recipes.Select(r => r.Name).ToArrayAsync();
+            return recipes;
+        }
     }
 }

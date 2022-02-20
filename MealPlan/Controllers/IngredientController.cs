@@ -2,7 +2,7 @@
 using MealPlan.Repo.Dto.Models;
 using MealPlan.Repo.Dto.Repos;
 
-namespace MealPlan
+namespace MealPlan.Controllers
 {
     internal class IngredientController : IConsoleController
     {

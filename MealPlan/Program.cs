@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Autofac;
 using MealPlan;
+using MealPlan.Controllers;
 using MealPlan.DependencyInjection;
 
 if (args.Count(a => a.StartsWith("-")) != 1)
